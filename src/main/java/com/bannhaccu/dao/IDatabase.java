@@ -5,10 +5,12 @@
  */
 package com.bannhaccu.dao;
 
+import java.sql.Connection;
+
 /**
  *
  * @author TienAnh
  */
 public interface IDatabase {
-    public connect
+    
 }
