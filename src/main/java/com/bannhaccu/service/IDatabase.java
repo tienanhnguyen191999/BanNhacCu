@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bannhaccu.dao;
+package com.bannhaccu.service;
 
-import javax.inject.Inject;
+import java.sql.Connection;
 
 /**
  *
  * @author TienAnh
  */
-public class NhanVienDAO extends DAO{
+public interface IDatabase {
+    public Connection getConnection();
 }

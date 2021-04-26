@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bannhaccu.dao;
-
-import java.sql.Connection;
+package com.bannhaccu.service;
 
 /**
  *
  * @author TienAnh
  */
-public interface IDatabase {
+public interface ILogger {
     
 }
