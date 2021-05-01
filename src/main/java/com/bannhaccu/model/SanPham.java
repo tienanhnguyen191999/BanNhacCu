@@ -10,16 +10,19 @@ package com.bannhaccu.model;
  * @author TienAnh
  */
 public class SanPham {
-    private Integer id;
+    private int id;
     private String ten;
     private String thongsokithuat;
     private String mota;
     private int soluong;
-    private float gia;
+    private double gia;
     private String mausac;
     private Hang hang;
     private TheLoai theloai;
 
+    public SanPham() {
+    }
+    
     public SanPham(Integer id, String ten, String thongsokithuat, String mota, int soluong, float gia, String mausac, Hang hang, TheLoai theloai) {
         this.id = id;
         this.ten = ten;
@@ -32,7 +35,7 @@ public class SanPham {
         this.theloai = theloai;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,7 +55,7 @@ public class SanPham {
         this.soluong = soluong;
     }
 
-    public void setGia(float gia) {
+    public void setGia(double gia) {
         this.gia = gia;
     }
 
@@ -68,9 +71,7 @@ public class SanPham {
         this.theloai = theloai;
     }
 
-    
-    
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -90,7 +91,7 @@ public class SanPham {
         return soluong;
     }
 
-    public float getGia() {
+    public double getGia() {
         return gia;
     }
 

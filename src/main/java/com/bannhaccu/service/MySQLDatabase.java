@@ -5,6 +5,7 @@
  */
 package com.bannhaccu.service;
 
+import com.bannhaccu.annotation.Loggable;
 import com.bannhaccu.service.IDatabase;
 import java.sql.Connection;
 import java.sql.DriverManager;

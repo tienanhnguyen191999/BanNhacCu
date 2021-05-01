@@ -13,12 +13,12 @@ import java.util.Date;
  */
 public class HoaDon {
     private Integer id;
-    private Date thoigiantaohoadon;
+    private String thoigiantaohoadon;
     private Double tongtien;
     private NhanVien nhanvien;
     private KhachHang khachhang;
 
-    public HoaDon(Integer id, Date thoigiantaohoadon, Double tongtien, NhanVien nhanvien, KhachHang khachhang) {
+    public HoaDon(Integer id, String thoigiantaohoadon, Double tongtien, NhanVien nhanvien, KhachHang khachhang) {
         this.id = id;
         this.thoigiantaohoadon = thoigiantaohoadon;
         this.tongtien = tongtien;
@@ -30,7 +30,7 @@ public class HoaDon {
         return id;
     }
 
-    public Date getThoigiantaohoadon() {
+    public String getThoigiantaohoadon() {
         return thoigiantaohoadon;
     }
 
@@ -50,7 +50,7 @@ public class HoaDon {
         this.id = id;
     }
 
-    public void setThoigiantaohoadon(Date thoigiantaohoadon) {
+    public void setThoigiantaohoadon(String thoigiantaohoadon) {
         this.thoigiantaohoadon = thoigiantaohoadon;
     }
 

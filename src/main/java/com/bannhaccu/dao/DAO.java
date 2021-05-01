@@ -5,7 +5,9 @@
  */
 package com.bannhaccu.dao;
 
+import com.bannhaccu.annotation.Loggable;
 import com.bannhaccu.binding.DatabaseModule;
+import com.bannhaccu.binding.LoggingAOP;
 import com.bannhaccu.service.IDatabase;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -23,32 +25,29 @@ import java.util.logging.Logger;
 public class DAO {
     @Inject
     protected IDatabase db;
-    public static Connection conn;
+    protected static Connection conn;
 
+    @Loggable
     public DAO() {
         // Singleton pattern => Create only 1 instance overall app life-time
         if (conn == null) {
             System.out.println("CREATE NEW INSTANCE");
-            Injector injector = Guice.createInjector(new DatabaseModule());
+            Injector injector = Guice.createInjector(new DatabaseModule(), new LoggingAOP());
             conn = injector.getInstance(IDatabase.class).getConnection();
         }
     }
+    
+    @Loggable
+    public void hello () {
+        System.out.println("HELLO");
+    }
 
-    public static void main(String[] args) {
-        try {
-            DAO a = new DAO();
-            Statement stmt = a.conn.createStatement();
-            // get data from table 'student'
-            ResultSet rs = stmt.executeQuery("select * from hang");
-            // show data
-            while (rs.next()) {
-                System.out.println(rs.getInt(3) + "  " + rs.getString(2)
-                    + "  " + rs.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public IDatabase getDb() {
+        return db;
+    }
 
+    public static Connection getConn() {
+        return conn;
     }
 }
 
