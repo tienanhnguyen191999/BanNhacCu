@@ -14,6 +14,10 @@ public class NhanVien extends User{
     private String tendangnhap;
     private String password;
 
+    public NhanVien() {
+        super(null, null, null, null, null, null, null);
+    }
+    
     public NhanVien(int vitri, String tendangnhap, String password, Integer id, String ten, String ngaysinh, String gioitinh, String email, String sodienthoai, String ghichu) {
         super(id, ten, ngaysinh, gioitinh, email, sodienthoai, ghichu);
         this.vitri = vitri;

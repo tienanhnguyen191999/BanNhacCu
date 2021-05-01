@@ -12,6 +12,10 @@ package com.bannhaccu.model;
 public class KhachHang extends User{
     private String maKH;
 
+    public KhachHang() {
+        super(null, null, null, null, null, null, null);
+    }
+
     public KhachHang(String maKH, Integer id, String ten, String ngaysinh, String gioitinh, String email, String sodienthoai, String ghichu) {
         super(id, ten, ngaysinh, gioitinh, email, sodienthoai, ghichu);
         this.maKH = maKH;
