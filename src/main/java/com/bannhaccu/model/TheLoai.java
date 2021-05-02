@@ -14,6 +14,12 @@ public class TheLoai {
     private String ten;
     private String mota;
 
+    public TheLoai(Integer id, String ten, String mota) {
+        this.id = id;
+        this.ten = ten;
+        this.mota = mota;
+    }
+
     public Integer getId() {
         return id;
     }

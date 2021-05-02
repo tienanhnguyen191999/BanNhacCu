@@ -10,20 +10,31 @@ package com.bannhaccu.model;
  * @author TienAnh
  */
 public class SanPhamDuocNhapKho {
+
     private int id;
     private int soluong;
     private String mota;
+    private double tongtien;
     private SanPham sanpham;
     private PhieuNhapKho phieunhapkho;
 
-    public SanPhamDuocNhapKho(int id, int soluong, String mota, SanPham sanpham, PhieuNhapKho phieunhapkho) {
+    public SanPhamDuocNhapKho(int id, int soluong, String mota, double tongtien, SanPham sanpham, PhieuNhapKho phieunhapkho) {
         this.id = id;
         this.soluong = soluong;
         this.mota = mota;
+        this.tongtien = tongtien;
         this.sanpham = sanpham;
         this.phieunhapkho = phieunhapkho;
     }
-        
+    
+    public void setTongtien(double tongtien) {
+        this.tongtien = tongtien;
+    }
+
+    public double getTongtien() {
+        return tongtien;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -43,8 +54,6 @@ public class SanPhamDuocNhapKho {
     public void setPhieunhapkho(PhieuNhapKho phieunhapkho) {
         this.phieunhapkho = phieunhapkho;
     }
-    
-    
 
     public int getId() {
         return id;
@@ -65,6 +74,5 @@ public class SanPhamDuocNhapKho {
     public PhieuNhapKho getPhieunhapkho() {
         return phieunhapkho;
     }
-    
-    
+
 }

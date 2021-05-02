@@ -6,7 +6,9 @@
 package com.bannhaccu.dao;
 
 import static com.bannhaccu.dao.DAO.conn;
+import com.bannhaccu.model.Hang;
 import com.bannhaccu.model.SanPham;
+import com.bannhaccu.model.TheLoai;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,20 +26,29 @@ public class SanPhamDAO extends DAO {
         SanPham sp = null;
         try {
             // get data from table 'student'
-            String sql = "select * from sanpham where id = ?";
+            String sql = "select * from sanpham"
+                + " join hang on sanpham.id_hang = hang.id"
+                + " join theloai on sanpham.id_theloai = theloai.id"
+                + " where sanpham.id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             // show data
             while (rs.next()) {
                 sp = new SanPham();
-                sp.setId(rs.getInt("id"));
-                sp.setGia(rs.getInt("gia"));
-                sp.setSoluong(rs.getInt("soluong"));
-                sp.setTen(rs.getString("ten"));
-                sp.setThongsokithuat(rs.getString("thongsokithuat"));
-                sp.setMota(rs.getString("mota"));
-                sp.setMausac(rs.getString("mausac"));
+                sp.setId(rs.getInt("sanpham.id"));
+                sp.setGia(rs.getInt("sanpham.gia"));
+                sp.setSoluong(rs.getInt("sanpham.soluong"));
+                sp.setTen(rs.getString("sanpham.ten"));
+                sp.setThongsokithuat(rs.getString("sanpham.thongsokithuat"));
+                sp.setMota(rs.getString("sanpham.mota"));
+                sp.setMausac(rs.getString("sanpham.mausac"));
+                
+                Hang hang = new Hang(rs.getInt("hang.id"), rs.getString("hang.ten"), rs.getString("hang.mota"));
+                sp.setHang(hang);
+                
+                TheLoai theloai = new TheLoai(rs.getInt("theloai.id"), rs.getString("theloai.ten"), rs.getString("theloai.mota"));
+                sp.setTheloai(theloai);
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);

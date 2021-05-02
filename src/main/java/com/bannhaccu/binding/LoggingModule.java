@@ -7,6 +7,8 @@ package com.bannhaccu.binding;
 
 import com.bannhaccu.annotation.Loggable;
 import com.bannhaccu.service.ConsoleLogger;
+import com.bannhaccu.service.EmailLogger;
+import com.bannhaccu.service.FileLogger;
 import com.bannhaccu.service.ILogger;
 import com.bannhaccu.service.LoggingInterceptor;
 import com.google.inject.AbstractModule;
@@ -21,6 +23,6 @@ import com.google.inject.matcher.Matchers;
 public class LoggingModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(ILogger.class).to(ConsoleLogger.class);
+        bind(ILogger.class).to(EmailLogger.class);
     }
 }
