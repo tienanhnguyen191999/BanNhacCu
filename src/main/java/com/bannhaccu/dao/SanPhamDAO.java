@@ -71,4 +71,20 @@ public class SanPhamDAO extends DAO {
             }
         }
     }
+    
+    public void updateSoluong (TableModel tm) {
+        for (int i = 0; i < tm.getRowCount(); i++) {
+            try {
+                if (tm.getValueAt(i, 1) != null) {
+                    String sql = "UPDATE sanpham SET soluong=soluong + ? WHERE id = ?";
+                    PreparedStatement stmt = conn.prepareStatement(sql);
+                    stmt.setInt(1, new Integer(tm.getValueAt(i, 5)+""));
+                    stmt.setInt(2, (int) tm.getValueAt(i, 1));
+                    stmt.executeUpdate();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
