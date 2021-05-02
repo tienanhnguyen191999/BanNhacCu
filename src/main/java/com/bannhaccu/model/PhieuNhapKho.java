@@ -13,20 +13,41 @@ import java.util.Date;
  */
 public class PhieuNhapKho {
     private int id;
-    private Date thoigiantaophieu;
+    private String thoigiantaophieu;
+    private double tongtien;
+    private int is_check;    
     private NhanVien nhanvien;
 
-    public PhieuNhapKho(int id, Date thoigiantaophieu, NhanVien nhanvien) {
+
+    public PhieuNhapKho(int id, String thoigiantaophieu, double tongtien, int is_check, NhanVien nhanvien) {
         this.id = id;
         this.thoigiantaophieu = thoigiantaophieu;
+        this.tongtien = tongtien;
+        this.is_check = is_check;
         this.nhanvien = nhanvien;
+    }
+
+    public void setIs_check(int is_check) {
+        this.is_check = is_check;
+    }
+
+    public int getIs_check() {
+        return is_check;
+    }
+
+    public void setTongtien(double tongtien) {
+        this.tongtien = tongtien;
+    }
+
+    public double getTongtien() {
+        return tongtien;
     }
     
     public int getId() {
         return id;
     }
 
-    public Date getThoigiantaophieu() {
+    public String getThoigiantaophieu() {
         return thoigiantaophieu;
     }
 
@@ -38,7 +59,7 @@ public class PhieuNhapKho {
         this.id = id;
     }
 
-    public void setThoigiantaophieu(Date thoigiantaophieu) {
+    public void setThoigiantaophieu(String thoigiantaophieu) {
         this.thoigiantaophieu = thoigiantaophieu;
     }
 

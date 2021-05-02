@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 package com.bannhaccu.view;
-import com.bannhaccu.dao.NhanVienDAO;
+
+import com.bannhaccu.dao.NhanVienDAO; 
 import com.bannhaccu.model.NhanVien;
-import javax.swing.JFrame;
+import javax.swing.JFrame; // JDK 8
 import javax.swing.JOptionPane;
+
+// Swing JAVA
 /**
  *
  * @author TienAnh
@@ -113,7 +116,14 @@ public class Dangnhap extends JFrame {
         nv.setTendangnhap(username);
         nv.setPassword(password);
         if (nhanvienDAO.kiemtraDangNhap(nv)) {
-            new NvbhMain(nv).setVisible(true);
+            if (nv.getVitri() == 1) {
+                new NvbhMain(nv).setVisible(true);
+            } else if(nv.getVitri() == 9) {
+                new NvqlMain(nv).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Vị trí không hợp lệ");
+                return;
+            }
             dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Tên đăng nhập hoặc mật khẩu không chính xác.");

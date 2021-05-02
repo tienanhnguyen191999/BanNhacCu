@@ -13,11 +13,7 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 /**
  *
  * @author TienAnh
@@ -26,7 +22,7 @@ public class DAO {
     @Inject
     protected IDatabase db;
     protected static Connection conn;
-
+    
     @Loggable
     public DAO() {
         // Singleton pattern => Create only 1 instance overall app life-time
