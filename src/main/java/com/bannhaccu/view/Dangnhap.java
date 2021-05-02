@@ -16,14 +16,13 @@ import javax.swing.JOptionPane;
  * @author TienAnh
  */
 public class Dangnhap extends JFrame {
-    NhanVienDAO nhanvienDAO; // NhanVien DataAccessObject
+    NhanVienDAO nhanvienDAO;
     /**
      * Creates new form java
      */
     public Dangnhap() {
         nhanvienDAO = new NhanVienDAO();
-        initComponents(); // 
-        System.out.println("ABC"); //
+        initComponents();
     }
 
     @SuppressWarnings("unchecked")

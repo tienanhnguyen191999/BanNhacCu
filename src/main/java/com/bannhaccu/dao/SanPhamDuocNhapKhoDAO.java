@@ -59,7 +59,6 @@ public class SanPhamDuocNhapKhoDAO extends DAO {
     }
     
     public ArrayList<SanPhamDuocNhapKho> getListSanPhamNhapKho (int id_pnk){
-        System.out.println("id_pnk " + id_pnk);
         ArrayList<SanPhamDuocNhapKho> arr_data = new ArrayList<SanPhamDuocNhapKho>();
         try {
             String sql = "SELECT * FROM sanphamduocnhapkho "
