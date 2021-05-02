@@ -42,7 +42,7 @@ public class SanPhamDuocNhapKhoDAO extends DAO {
                     }
 
                     // Store sản phẩm được nhập kho
-                    sql = "INSERT INTO sanphamduocnhapkho (soluong, tongtien, id_sanpham, id_phieunhapkho) VALUES (?, ?, ?, ?)";
+                    sql = "INSERT INTO sanphamduocnhapkho (soluong_dathang, tongtien, id_sanpham, id_phieunhapkho) VALUES (?, ?, ?, ?)";
                     stmt = conn.prepareStatement(sql);
                     String thoigiantaohoadon = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date());
                     stmt.setString(1, (String) tm.getValueAt(i, 8));
@@ -70,7 +70,7 @@ public class SanPhamDuocNhapKhoDAO extends DAO {
             
             while (rs.next()) {
                 double tongtien = rs.getDouble("sanphamduocnhapkho.tongtien");
-                int soluong = rs.getInt("sanphamduocnhapkho.soluong");
+                int soluong = rs.getInt("sanphamduocnhapkho.soluong_dathang");
                 int id = rs.getInt("sanphamduocnhapkho.id");
                 
                 SanPham sanpham = new SanPham();
@@ -85,5 +85,24 @@ public class SanPhamDuocNhapKhoDAO extends DAO {
             Logger.getLogger(SanPhamDuocNhapKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return arr_data;
+    }
+    
+    public void updateThucNhan (TableModel tm, int id_pnk) {
+        for (int i = 0; i < tm.getRowCount(); i++) {
+            if (tm.getValueAt(i, 0) != null) {
+                try {
+                    String sql = "UPDATE sanphamduocnhapkho "
+                        + "SET soluong_thucnhan = ? "
+                        + "WHERE id_phieunhapkho = ? and id_sanpham = ?";
+                    PreparedStatement stmt = conn.prepareStatement(sql);
+                    stmt.setInt(1, new Integer(tm.getValueAt(i, 5)+""));
+                    stmt.setInt(2, id_pnk);
+                    stmt.setInt(3, (int) tm.getValueAt(i, 0));
+                    stmt.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SanPhamDuocNhapKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 }

@@ -46,6 +46,11 @@ public class NvqlMain extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(266, 48));
 
         jButton1.setText("Đăng xuất");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         lbUsername.setText("jLabel1");
 
@@ -132,6 +137,11 @@ public class NvqlMain extends javax.swing.JFrame {
         new NvqlQuanLyPhieuNhapKho(nv).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new Dangnhap().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
