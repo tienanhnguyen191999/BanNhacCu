@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bannhaccu.view;
+package com.bannhaccu.view.quanly;
 
 import com.bannhaccu.dao.PhieuNhapKhoDAO;
 import com.bannhaccu.model.NhanVien;
 import com.bannhaccu.model.PhieuNhapKho;
+import com.bannhaccu.view.Dangnhap;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

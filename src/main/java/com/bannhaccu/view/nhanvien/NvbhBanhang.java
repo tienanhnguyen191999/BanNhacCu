@@ -3,53 +3,60 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bannhaccu.view;
+package com.bannhaccu.view.nhanvien;
 
-import com.bannhaccu.dao.DAO;
-import com.bannhaccu.dao.PhieuNhapKhoDAO;
+import com.bannhaccu.dao.NhanVienDAO;
 import com.bannhaccu.dao.SanPhamDAO;
-import com.bannhaccu.dao.SanPhamDuocNhapKhoDAO;
 import com.bannhaccu.model.NhanVien;
-import com.bannhaccu.model.PhieuNhapKho;
 import com.bannhaccu.model.SanPham;
+import com.bannhaccu.view.Dangnhap;
+import java.awt.Component;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author TienAnh
  */
-public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
+public class NvbhBanhang extends javax.swing.JFrame {
 
     private NhanVien nv;
     private SanPhamDAO spDAO;
-    private PhieuNhapKhoDAO pnkDAO;
-    private SanPhamDuocNhapKhoDAO spdnkDAO;
 
     /**
-     * Creates new form NvqlTaoPhieuNhapKho
+     * Creates new form NvbhBanhang
      */
-    public NvqlTaoPhieuNhapKho(NhanVien nv) {
+    public NvbhBanhang(NhanVien nv) {
         initComponents();
-        this.nv = nv;
-        spDAO = new SanPhamDAO();
-        pnkDAO = new PhieuNhapKhoDAO();
-        spdnkDAO = new SanPhamDuocNhapKhoDAO();
-        lbUsername.setText(nv.getTendangnhap());
-        tfNhanVienTaoPhieu.setText(nv.getTendangnhap());
         initTableProduct();
+        this.nv = nv;
+        this.spDAO = new SanPhamDAO();
+        lbUsername.setText(this.nv.getTendangnhap());
+    }
+
+    public NvbhBanhang(NhanVien nv, TableModel tm) {
+        initComponents();
+        tableSanpham.setModel(tm);
+        initTableProduct();
+        this.nv = nv;
+        this.spDAO = new SanPhamDAO();
+        lbUsername.setText(this.nv.getTendangnhap());
     }
 
     private void initTableProduct() {
@@ -65,8 +72,7 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 tableSanpham.getCellEditor().stopCellEditing(); // store user input
                 if (tableSanpham.getSelectedColumn() == 1 && tableSanpham.getModel().getValueAt(tableSanpham.getSelectedRow(), 1) != null) {
-                    // Focus "Số lượng nhập"
-                    tableSanpham.editCellAt(tableSanpham.getSelectedRow(), 8);
+                    tableSanpham.editCellAt(tableSanpham.getSelectedRow(), 5);
                     tableSanpham.requestFocus();
                 }
             }
@@ -87,12 +93,21 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
                             Object maSanPham = table.getValueAt(e.getLastRow(), 1);
                             SanPham sp = spDAO.getSanphamByID(new Integer(maSanPham + ""));
                             if (sp != null) {
-                                table.setValueAt(sp.getTen(), e.getLastRow(), 2);
-                                table.setValueAt(sp.getMausac(), e.getLastRow(), 3);
-                                table.setValueAt(sp.getHang().getTen(), e.getLastRow(), 4);
-                                table.setValueAt(sp.getTheloai().getTen(), e.getLastRow(), 5);
-                                table.setValueAt(sp.getGia(), e.getLastRow(), 6);
-                                table.setValueAt(sp.getSoluong(), e.getLastRow(), 7);
+                                // Update soluong
+                                for (int i = 0; i < table.getRowCount(); i++) {
+                                    if (i != e.getLastRow() && table.getValueAt(i, 1) != null && new Integer(table.getValueAt(i, 1)+"") == sp.getId()) {
+                                        sp.setSoluong(sp.getSoluong() - new Integer(table.getValueAt(i, 5)+""));
+                                    }
+                                }
+                                
+                                if (sp.getSoluong() <= 0) {
+                                    JOptionPane.showMessageDialog(null, "Mã sản phẩm hết hàng");
+                                    table.setValueAt(null, e.getLastRow(), 1);
+                                } else {
+                                    table.setValueAt(sp.getTen(), e.getLastRow(), 2);
+                                    table.setValueAt(sp.getGia(), e.getLastRow(), 3);
+                                    table.setValueAt(sp.getSoluong(), e.getLastRow(), 4);
+                                }
                             } else {
                                 JOptionPane.showMessageDialog(null, "Mã sản phẩm không tồn tại");
                                 table.setValueAt(null, e.getLastRow(), 1);
@@ -101,22 +116,26 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Mã sản phẩm phải là chữ số");
                             table.setValueAt(null, e.getLastRow(), 1);
                         }
-                    } else if (e.getColumn() == 8) {
-                        if (table.getValueAt(e.getLastRow(), 8) != null) {
+                    } else if (e.getColumn() == 5) {
+                        if (table.getValueAt(e.getLastRow(), 5) != null) {
                             try {
-                                Double total = new Integer(table.getValueAt(e.getLastRow(), 8) + "") * (Double) (table.getValueAt(e.getLastRow(), 6));
-                                table.setValueAt(table.getRowCount(), e.getLastRow(), 0);
-                                table.setValueAt(total, e.getLastRow(), 9);
-                                DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-                                formatter.applyPattern("#,###,###,###");
-                                tfTongtien.setText(formatter.format(calculateTotal()).toString());
-                                addRow();
+                                if (new Integer(table.getValueAt(e.getLastRow(), 5) + "") <= new Integer(table.getValueAt(e.getLastRow(), 4) + "")) {
+                                    Double total = new Integer(table.getValueAt(e.getLastRow(), 5)+"") * (Double) (table.getValueAt(e.getLastRow(), 3));
+                                    table.setValueAt(table.getRowCount(), e.getLastRow(), 0);
+                                    table.setValueAt(total, e.getLastRow(), 6);
+                                    tfTongtien.setText(calculateTotal());
+                                    addRow();
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Số lượng mua phải nhỏ hơn số lượng còn tồn kho");
+                                    table.setValueAt(null, e.getLastRow(), 5);
+                                }
                             } catch (java.lang.NumberFormatException ex) {
                                 JOptionPane.showMessageDialog(null, "Số lượng phải là chữ số");
-                                table.setValueAt(null, e.getLastRow(), 8);
+                                table.setValueAt(null, e.getLastRow(), 5);
                             }
 
                         }
+
                     }
                 }
             }
@@ -124,19 +143,20 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
         });
     }
 
-    private double calculateTotal() {
+    private String calculateTotal() {
         double total = 0;
         for (int i = 0; i < tableSanpham.getModel().getRowCount(); i++) {
-            if (tableSanpham.getModel().getValueAt(i, 1) != null) {
-                total += (Double) tableSanpham.getModel().getValueAt(i, 9);
-            }
+            total += (Double) tableSanpham.getModel().getValueAt(i, 6);
         }
-        return total;
+
+        DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+        formatter.applyPattern("#,###,###,###");
+        return formatter.format(total).toString();
     }
 
     private void addRow() {
         DefaultTableModel table = (DefaultTableModel) tableSanpham.getModel();
-        Object[] emptyData = {null, null, null, null, null, null, null, null, null, null};
+        Object[] emptyData = {null, null, null, null, null, null};
         table.addRow(emptyData);
         tableSanpham.editCellAt(tableSanpham.getRowCount(), 1);
         tableSanpham.requestFocus();
@@ -161,9 +181,7 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         tfTongtien = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        tfNhanVienTaoPhieu = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -194,7 +212,7 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 540, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
@@ -213,17 +231,17 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
 
         tableSanpham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Mã", "Tên sản phẩm", "Màu", "Hãng", "Thể loại", "Giá", "Tồn kho", "Số lượng nhập", "Tổng tiền"
+                "STT", "Mã sản phẩm", "Tên sản phẩm", "Giá", "Tồn kho", "Số lượng", "Tổng tiền"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false, false, false, true, false
+                false, true, false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -238,14 +256,16 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
         tableSanpham.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tableSanpham);
         if (tableSanpham.getColumnModel().getColumnCount() > 0) {
-            tableSanpham.getColumnModel().getColumn(0).setPreferredWidth(10);
-            tableSanpham.getColumnModel().getColumn(1).setPreferredWidth(30);
-            tableSanpham.getColumnModel().getColumn(2).setPreferredWidth(200);
-            tableSanpham.getColumnModel().getColumn(3).setPreferredWidth(50);
-            tableSanpham.getColumnModel().getColumn(4).setPreferredWidth(50);
-            tableSanpham.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tableSanpham.getColumnModel().getColumn(7).setPreferredWidth(50);
-            tableSanpham.getColumnModel().getColumn(8).setPreferredWidth(60);
+            tableSanpham.getColumnModel().getColumn(0).setMaxWidth(50);
+            tableSanpham.getColumnModel().getColumn(1).setMaxWidth(200);
+            tableSanpham.getColumnModel().getColumn(3).setMinWidth(100);
+            tableSanpham.getColumnModel().getColumn(3).setMaxWidth(100);
+            tableSanpham.getColumnModel().getColumn(4).setMinWidth(100);
+            tableSanpham.getColumnModel().getColumn(4).setMaxWidth(100);
+            tableSanpham.getColumnModel().getColumn(5).setMinWidth(100);
+            tableSanpham.getColumnModel().getColumn(5).setMaxWidth(100);
+            tableSanpham.getColumnModel().getColumn(6).setMinWidth(100);
+            tableSanpham.getColumnModel().getColumn(6).setMaxWidth(100);
         }
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -261,13 +281,13 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(291, 291, 291)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 328, Short.MAX_VALUE)
                 .addComponent(tfTongtien, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(19, 19, 19))
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -275,16 +295,12 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton4.setText("Tạo phiếu nhập kho");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("Tạo hóa đơn");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("Nhân viên tạo phiếu");
-
-        tfNhanVienTaoPhieu.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -294,33 +310,24 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfNhanVienTaoPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfNhanVienTaoPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(11, 11, 11)
+                .addComponent(jButton3)
+                .addContainerGap())
         );
 
         pack();
@@ -333,43 +340,14 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new NvqlMain(nv).setVisible(true);
+        new NvbhMain(nv).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // Is any product fill
-        for (int i = 0; i < tableSanpham.getModel().getRowCount(); i++) {
-            if (tableSanpham.getModel().getValueAt(i, 0) != null) {
-                break;
-            }
-            if (i == tableSanpham.getModel().getRowCount() - 1) {
-                return;
-            }
-        }
-
-        try {
-            // Bắt đầu transaction
-            DAO.getConn().setAutoCommit(false);
-            // 1. Lưu phiếu nhập kho
-            PhieuNhapKho pnk = pnkDAO.storePhieuNhapKho(calculateTotal(), nv);
-            // 2. Lưu sản phẩm được nhập thêm vào kho
-            spdnkDAO.storeSanPhamDuocNhapKho(tableSanpham.getModel(), pnk);
-            // Commit Transaction
-            DAO.getConn().commit();
-            
-            JOptionPane.showMessageDialog(null, "Tạo phiếu nhập kho thành công");
-            new NvqlMain(nv).setVisible(true);
-            this.dispose();
-        } catch (Exception ex) {
-            try {
-                // RollBack Transaction
-                DAO.getConn().rollback();
-            } catch (SQLException ex1) {
-                Logger.getLogger(NvqlTaoPhieuNhapKho.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        new NvbhTaoHoaDon(this.nv, this.tableSanpham.getModel()).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,24 +359,15 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NvqlTaoPhieuNhapKho.class
-                .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NvbhBanhang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NvqlTaoPhieuNhapKho.class
-                .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NvbhBanhang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NvqlTaoPhieuNhapKho.class
-                .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NvbhBanhang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NvqlTaoPhieuNhapKho.class
-                .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NvbhBanhang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -406,10 +375,9 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 NhanVien nv = new NhanVien();
-                nv.setTendangnhap("ADMIN01");
-                nv.setVitri(9);
-                nv.setId(4);
-                new NvqlTaoPhieuNhapKho(nv).setVisible(true);
+                nv.setTendangnhap("NHANVIEN001");
+                nv.setId(3);
+                new NvbhBanhang(nv).setVisible(true);
             }
         });
     }
@@ -417,15 +385,13 @@ public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbUsername;
     private javax.swing.JTable tableSanpham;
-    private javax.swing.JTextField tfNhanVienTaoPhieu;
     private javax.swing.JTextField tfTongtien;
     // End of variables declaration//GEN-END:variables
 }

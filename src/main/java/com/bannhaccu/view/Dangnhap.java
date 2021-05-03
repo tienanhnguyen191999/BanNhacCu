@@ -5,6 +5,8 @@
  */
 package com.bannhaccu.view;
 
+import com.bannhaccu.view.nhanvien.NvbhMain;
+import com.bannhaccu.view.quanly.NvqlMain;
 import com.bannhaccu.dao.NhanVienDAO; 
 import com.bannhaccu.model.NhanVien;
 import javax.swing.JFrame; // JDK 8
