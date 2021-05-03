@@ -7,10 +7,13 @@ package com.bannhaccu.dao;
 
 import static com.bannhaccu.dao.DAO.conn;
 import com.bannhaccu.model.HoaDon;
+import com.bannhaccu.model.MatHangDuocBan;
+import com.bannhaccu.model.SanPham;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.TableModel;
@@ -47,5 +50,39 @@ public class MatHangDuocBanDAO extends DAO{
                 Logger.getLogger(MatHangDuocBanDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public ArrayList<MatHangDuocBan> getMatHangDuocBanByIdHoaDon (int id_hoadon) {
+        ArrayList<MatHangDuocBan> arr_data = new ArrayList<MatHangDuocBan>();
+        try {
+            String sql = "SELECT * FROM mathangduocchon "
+                       + "JOIN sanpham on mathangduocchon.id_sanpham = sanpham.id "
+                       + "WHERE id_hoadon = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id_hoadon);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){ 
+                SanPham sanpham = new SanPham(
+                    rs.getInt("sanpham.id"),
+                    rs.getString("sanpham.ten"),
+                    rs.getString("sanpham.thongsokithuat"),
+                    rs.getString("sanpham.mota"),
+                    rs.getInt("sanpham.soluong"), 
+                    (float) rs.getDouble("sanpham.gia"),
+                    rs.getString("sanpham.mausac"), 
+                    null, null);
+                
+                MatHangDuocBan mhdb = new MatHangDuocBan(
+                    rs.getInt("mathangduocchon.id"), 
+                    rs.getInt("mathangduocchon.soluong"), 
+                    rs.getDouble("mathangduocchon.tongtien"),
+                    "", null, 
+                    sanpham);
+                arr_data.add(mhdb);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MatHangDuocBanDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return arr_data;
     }
 }
