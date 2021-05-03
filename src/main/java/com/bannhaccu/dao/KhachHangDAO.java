@@ -74,9 +74,4 @@ public class KhachHangDAO extends DAO {
         }
         return kh;
     }
-    public static void main(String[] args) {
-        KhachHangDAO kh = new KhachHangDAO();
-        KhachHang tmp = kh.createOrUpdateKhachHang("0366216325", "TienAnh");
-        System.out.println(tmp.getId());
-    }
 }
