@@ -5,10 +5,7 @@
  */
 package com.bannhaccu.service;
 
-/**
- *
- * @author TienAnh
- */
+
 public interface ILogger {
     public void showLog(String message);
 }

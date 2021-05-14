@@ -5,10 +5,7 @@
  */
 package com.bannhaccu.model;
 
-/**
- *
- * @author TienAnh
- */
+
 public class TheLoai {
     private Integer id;
     private String ten;

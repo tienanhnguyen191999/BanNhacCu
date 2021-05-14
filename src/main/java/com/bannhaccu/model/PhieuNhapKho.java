@@ -7,10 +7,7 @@ package com.bannhaccu.model;
 
 import java.util.Date;
 
-/**
- *
- * @author TienAnh
- */
+
 public class PhieuNhapKho {
     private int id;
     private String thoigiantaophieu;

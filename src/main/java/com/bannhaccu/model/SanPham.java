@@ -5,10 +5,7 @@
  */
 package com.bannhaccu.model;
 
-/**
- *
- * @author TienAnh
- */
+
 public class SanPham {
     private int id;
     private String ten;

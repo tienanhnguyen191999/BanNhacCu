@@ -5,10 +5,7 @@
  */
 package com.bannhaccu.model;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NhanVien extends User{
     private int vitri;
     private String tendangnhap;

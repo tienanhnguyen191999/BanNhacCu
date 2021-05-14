@@ -28,10 +28,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvqlTaoPhieuNhapKho extends javax.swing.JFrame {
 
     private NhanVien nv;

@@ -20,10 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvqlQuanLySanPham extends javax.swing.JFrame {
     private NhanVien nv;
     private SanPhamDAO spDAO;

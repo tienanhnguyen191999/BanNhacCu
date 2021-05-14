@@ -24,10 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvbhTaoHoaDon extends javax.swing.JFrame {
     private NhanVien nv;
     private SanPhamDAO spDAO;

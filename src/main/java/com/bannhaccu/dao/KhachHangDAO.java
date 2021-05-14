@@ -14,10 +14,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author TienAnh
- */
+
 public class KhachHangDAO extends DAO {
 
     public KhachHang createOrUpdateKhachHang(String sdt, String name) {

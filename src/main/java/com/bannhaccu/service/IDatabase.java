@@ -7,10 +7,7 @@ package com.bannhaccu.service;
 
 import java.sql.Connection;
 
-/**
- *
- * @author TienAnh
- */
+
 public interface IDatabase {
     public Connection getConnection();
 }

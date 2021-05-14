@@ -21,10 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class SanPhamDuocNhapKhoDAO extends DAO {
 
     public void storeSanPhamDuocNhapKho(TableModel tm, PhieuNhapKho pnk) {

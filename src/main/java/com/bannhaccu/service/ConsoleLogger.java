@@ -9,10 +9,7 @@ import java.util.Date;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author TienAnh
- */
+
 public class ConsoleLogger implements ILogger{
 
     @Override

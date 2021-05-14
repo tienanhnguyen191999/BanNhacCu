@@ -17,10 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvqlPhieuNhapKhoChiTiet extends javax.swing.JFrame {
     SanPhamDuocNhapKhoDAO spdnkDAO;
     /**

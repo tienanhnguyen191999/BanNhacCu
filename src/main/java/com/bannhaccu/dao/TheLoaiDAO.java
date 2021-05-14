@@ -14,10 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author TienAnh
- */
+
 public class TheLoaiDAO extends DAO{
     public ArrayList<TheLoai> gelAllTheLoai () {
         ArrayList<TheLoai> arr_data = new ArrayList<TheLoai>();

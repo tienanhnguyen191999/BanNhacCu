@@ -18,10 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class MatHangDuocBanDAO extends DAO{
     public void storeHangDuocBan(TableModel tm, HoaDon hoadon) {
         for (int i = 0; i < tm.getRowCount(); i++) {

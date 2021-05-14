@@ -17,10 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvqlHoaDonChiTiet extends javax.swing.JFrame {
     private MatHangDuocBanDAO mhdbDAO;
     private int id_hoadon;

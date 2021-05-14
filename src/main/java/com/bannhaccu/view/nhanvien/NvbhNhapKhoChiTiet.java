@@ -29,10 +29,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvbhNhapKhoChiTiet extends javax.swing.JFrame {
     private SanPhamDuocNhapKhoDAO spdnkDAO;
     private PhieuNhapKhoDAO phieuNhapKhoDAO;

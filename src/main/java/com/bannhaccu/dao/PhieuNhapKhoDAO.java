@@ -19,10 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class PhieuNhapKhoDAO extends DAO {
     public PhieuNhapKho storePhieuNhapKho (double total, NhanVien nv) {
         PhieuNhapKho pnk = null;

@@ -11,10 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- *
- * @author TienAnh
- */
+
 public class MySQLDatabase implements IDatabase {
     @Override
     public Connection getConnection() {

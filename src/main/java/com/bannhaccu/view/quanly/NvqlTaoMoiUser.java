@@ -13,10 +13,7 @@ import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvqlTaoMoiUser extends javax.swing.JFrame {
     NhanVienDAO nvDAO;
     NhanVien nv;

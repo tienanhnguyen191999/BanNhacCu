@@ -20,10 +20,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author TienAnh
- */
+
 public class HoaDonDAO extends DAO{
     public HoaDon storeHoadon (Double total, KhachHang kh, NhanVien nv) {
         HoaDon hd = null;

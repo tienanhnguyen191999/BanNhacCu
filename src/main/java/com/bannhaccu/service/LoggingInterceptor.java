@@ -9,10 +9,7 @@ import com.google.inject.Inject;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
-/**
- *
- * @author TienAnh
- */
+
 public class LoggingInterceptor implements MethodInterceptor{
     @Inject
     private ILogger logger;

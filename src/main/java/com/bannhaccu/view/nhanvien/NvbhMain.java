@@ -8,10 +8,7 @@ package com.bannhaccu.view.nhanvien;
 import com.bannhaccu.model.NhanVien;
 import com.bannhaccu.view.Dangnhap;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvbhMain extends javax.swing.JFrame {
     private NhanVien nv;
     /**

@@ -25,10 +25,7 @@ import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvqlXemThongKe extends javax.swing.JFrame {
     private JDatePickerImpl startDate;
     private JDatePickerImpl endDate;

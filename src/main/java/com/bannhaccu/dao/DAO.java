@@ -14,10 +14,9 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import java.sql.Connection;
 
-/**
- *
- * @author TienAnh
- */
+
+// DAO - Data Access Object
+// Dung ra dam nhiem vai tro truy cap du lieu toi Database.
 public class DAO {
     @Inject
     protected IDatabase db;
@@ -30,6 +29,7 @@ public class DAO {
             System.out.println("CREATE NEW INSTANCE");
             Injector injector = Guice.createInjector(new DatabaseModule(), new LoggingAOP());
             conn = injector.getInstance(IDatabase.class).getConnection();
+            // conn = new IDatabase(); // Tao moi instance
         }
     }
     

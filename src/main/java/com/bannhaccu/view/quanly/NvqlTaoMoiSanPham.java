@@ -18,10 +18,7 @@ import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvqlTaoMoiSanPham extends javax.swing.JFrame {
     private SanPhamDAO spDAO;
     private HangDAO hangDAO;

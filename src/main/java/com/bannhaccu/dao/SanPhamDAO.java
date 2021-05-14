@@ -18,10 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class SanPhamDAO extends DAO {
 
     public SanPham getSanphamByID(int id) {

@@ -14,10 +14,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.matcher.Matchers;
 
-/**
- *
- * @author TienAnh
- */
+
 public class LoggingAOP extends AbstractModule{
     @Override
     protected void configure() {

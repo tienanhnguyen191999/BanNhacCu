@@ -8,10 +8,7 @@ package com.bannhaccu.view.quanly;
 import com.bannhaccu.model.NhanVien;
 import com.bannhaccu.view.Dangnhap;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvqlMain extends javax.swing.JFrame {
     NhanVien nv;
     /**

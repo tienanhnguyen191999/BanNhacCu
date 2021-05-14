@@ -12,10 +12,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author TienAnh
- */
+
 public class FileLogger implements ILogger{
 
     @Override

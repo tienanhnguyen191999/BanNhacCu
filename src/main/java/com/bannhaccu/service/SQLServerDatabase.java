@@ -8,10 +8,7 @@ package com.bannhaccu.service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-/**
- *
- * @author TienAnh
- */
+
 public class SQLServerDatabase implements IDatabase{
     @Override
     public Connection getConnection() {

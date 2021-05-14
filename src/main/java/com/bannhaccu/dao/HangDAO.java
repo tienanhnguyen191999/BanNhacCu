@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author TienAnh
- */
+
 public class HangDAO extends DAO{
     public ArrayList<Hang> gelAllHang () {
         ArrayList<Hang> arr_data = new ArrayList<Hang>();

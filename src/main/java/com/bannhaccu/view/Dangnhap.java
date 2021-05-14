@@ -13,16 +13,15 @@ import java.awt.KeyboardFocusManager;
 import javax.swing.JFrame; // JDK 8
 import javax.swing.JOptionPane;
 
-// Swing JAVA
-/**
- *
- * @author TienAnh
- */
+
+// Dang nhap ke thua JFrame ( Co thuoc tinh hoac phuong thuc nao cua JFRame => Dang nhap cung co!
 public class Dangnhap extends JFrame {
-    NhanVienDAO nhanvienDAO;
+    private NhanVienDAO nhanvienDAO;
     /**
      * Creates new form java
      */
+    
+    // Constructor
     public Dangnhap() {
         nhanvienDAO = new NhanVienDAO();
         initComponents();

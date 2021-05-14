@@ -15,10 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvbhNhapkho extends javax.swing.JFrame {
 
     private PhieuNhapKhoDAO pnkDAO;

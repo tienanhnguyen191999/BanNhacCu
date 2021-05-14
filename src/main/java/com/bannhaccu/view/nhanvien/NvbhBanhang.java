@@ -30,10 +30,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NvbhBanhang extends javax.swing.JFrame {
 
     private NhanVien nv;

@@ -16,10 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 
-/**
- *
- * @author TienAnh
- */
+
 public class NhanVienDAO extends DAO{
     
     public boolean kiemtraDangNhap (NhanVien nv) {

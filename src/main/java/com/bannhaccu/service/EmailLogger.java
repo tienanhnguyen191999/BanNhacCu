@@ -17,10 +17,8 @@ import javax.mail.internet.MimeMessage;
 import com.bannhaccu.config.MailConfig;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-/**
- *
- * @author TienAnh
- */
+
+
 public class EmailLogger implements ILogger{
     @Override
     public void showLog(String message) {
